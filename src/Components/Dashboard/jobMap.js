@@ -5,13 +5,17 @@ import { getCityCoords } from "../../Utils/getCityCoords";
 import { useDashboardContext } from "../../Context/useDashboardContext";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
+import { devIcons } from "../../Utils/devIcons";
+import "devicon/devicon.min.css";
 
 const useStyles = makeStyles(() => ({
   mapContainer: {
     height: "500px",
     width: "500px",
+    position: "relative",
   },
 }));
+
 const JobMap = () => {
   const classes = useStyles();
 
@@ -38,7 +42,6 @@ const JobMap = () => {
         }),
       ],
     });
-    console.log("mapInstance", mapInstance);
 
     mapRef.current = mapInstance;
   }, [mapContainerRef]);
@@ -50,20 +53,35 @@ const JobMap = () => {
     const newMarkers = jobs
       .map((job) => {
         const latLng = getCityCoords(job.locations[0]);
-        if (latLng) {
-          const marker = L.marker(latLng).addTo(mapRef.current);
-          marker.bindPopup(`<b>${job.title}</b>`);
-          return marker;
-        } else {
-          return null;
-        }
+        if (!latLng) return null;
+
+        const techSkills = job.techStack || [];
+        const matchingSkill = devIcons.find(
+          (icon) => icon.name === techSkills[0]?.name
+        );
+        if (!matchingSkill) return null;
+
+        const markerIcon = L.divIcon({
+          html: `<i class="${matchingSkill.icon}" style="background-color:${matchingSkill.background}, "></i>`,
+          iconSize: [30, 30],
+          iconAnchor: [40, 40], // add this style to center the markerIcon over the marker's coordinates
+          className: classes.markerIcon,
+        });
+
+        const marker = L.marker(latLng, { icon: markerIcon }).addTo(
+          mapRef.current
+        );
+        marker.bindPopup(`<b>${job.title}</b>`);
+        return marker;
       })
       .filter((marker) => marker !== null);
 
     markersRef.current = newMarkers;
 
-    const group = L.featureGroup(markersRef.current);
-    mapRef.current.fitBounds(group.getBounds());
+    if (newMarkers.length > 0) {
+      const group = L.featureGroup(newMarkers);
+      mapRef.current.fitBounds(group.getBounds());
+    }
   }, [jobs]);
 
   return (
