@@ -7,6 +7,9 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import { devIcons } from "../../Utils/devIcons";
 import "devicon/devicon.min.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import "leaflet.markercluster";
 
 const useStyles = makeStyles(() => ({
   mapContainer: {
@@ -22,6 +25,7 @@ const JobMap = () => {
   const { jobs } = useDashboardContext();
   const mapRef = useRef(null);
   const markersRef = useRef([]);
+  const markerClusterGroupRef = useRef(null);
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
@@ -42,6 +46,11 @@ const JobMap = () => {
         }),
       ],
     });
+
+    // Create a new MarkerClusterGroup and add it to the map
+    const markerClusterGroup = L.markerClusterGroup();
+    markerClusterGroupRef.current = markerClusterGroup;
+    mapInstance.addLayer(markerClusterGroup);
 
     mapRef.current = mapInstance;
   }, [mapContainerRef]);
@@ -68,10 +77,13 @@ const JobMap = () => {
           className: classes.markerIcon,
         });
 
-        const marker = L.marker(latLng, { icon: markerIcon }).addTo(
-          mapRef.current
-        );
+        const marker = L.marker(latLng, { icon: markerIcon });
+
         marker.bindPopup(`<b>${job.title}</b>`);
+
+        // Add the marker to the MarkerClusterGroup instead of directly to the map
+        markerClusterGroupRef.current.addLayer(marker);
+
         return marker;
       })
       .filter((marker) => marker !== null);
@@ -79,8 +91,8 @@ const JobMap = () => {
     markersRef.current = newMarkers;
 
     if (newMarkers.length > 0) {
-      const group = L.featureGroup(newMarkers);
-      mapRef.current.fitBounds(group.getBounds());
+      // Fit the bounds to the MarkerClusterGroup instead of the group of individual markers
+      mapRef.current.fitBounds(markerClusterGroupRef.current.getBounds());
     }
   }, [jobs]);
 
