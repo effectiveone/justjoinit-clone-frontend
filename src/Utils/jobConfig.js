@@ -1,5 +1,5 @@
 export const colorSet = {
-  applied: "#3454D1",
+  applied: "white",
   shortlisted: "#DC851F",
   accepted: "#09BC8A",
   rejected: "#D1345B",

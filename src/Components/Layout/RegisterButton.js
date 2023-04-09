@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuItem } from "@material-ui/core";
-
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 function RegisterButton({ handleClick }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -14,7 +14,19 @@ function RegisterButton({ handleClick }) {
 
   return (
     <>
-      <Button onClick={handleMenuOpen}>Register</Button>
+      <Button
+        style={{
+          backgroundColor: "#ec4d80",
+          color: "white",
+          borderRadius: "50px",
+          display: "flex",
+          flexDirection: "row",
+        }}
+        onClick={handleMenuOpen}
+      >
+        Sing in
+        <KeyboardArrowDownIcon />
+      </Button>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

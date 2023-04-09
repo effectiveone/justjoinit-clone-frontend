@@ -1,24 +1,12 @@
-import { AppBar, Toolbar, Typography, makeStyles } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Box } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import isAuth, { userType } from "../../Utils/isAuth";
 import { ApplicantButtons } from "./ApplicantButtons";
 import NoLoginButtons from "./nologinButtons";
 import RecruterButtons from "./RecruterButtons";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import navbarLogo from "../../justjoinit.png";
 
 const Navbar = () => {
-  const classes = useStyles();
   let history = useHistory();
 
   const handleClick = (location) => {
@@ -42,12 +30,38 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="fixed">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Job Portal
-        </Typography>
-        {getButtonsComponent()}
+    <AppBar
+      position="fixed"
+      style={{ backgroundColor: "#fff", color: "black" }}
+    >
+      <Toolbar
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          // alignItems: "center",
+        }}
+      >
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+          }}
+        >
+          <img src={navbarLogo} alt="Just Join" width="126px" height="40px" />
+          <Typography>#1 Job Board for tech industry in Europe</Typography>
+        </Box>
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          {getButtonsComponent()}
+        </Box>
       </Toolbar>
     </AppBar>
   );
