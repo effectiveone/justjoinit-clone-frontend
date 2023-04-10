@@ -1,4 +1,4 @@
-import { CreateJobs } from "../../Components/CreateJob/CreateJob";
+import CreateJobs from "../../Components/CreateJob/CreateJob";
 import Layout from "../../Components/Layout/Layout";
 
 const CreateJobsPage = () => {

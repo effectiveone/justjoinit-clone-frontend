@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.6.2",
     "axios": "^0.21.1",
     "devicon": "^2.15.1",
+    "enzyme": "^3.11.0",
     "isarray": "^2.0.5",
     "leaflet": "^1.9.3",
     "leaflet.markercluster": "1.5.1",
