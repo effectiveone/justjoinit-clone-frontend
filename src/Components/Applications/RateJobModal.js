@@ -10,14 +10,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const RateJobModal = ({
+const RateJobModal = ({
   open,
   handleClose,
   handleRatingChange,
   handleRatingSubmit,
-  rating,
+  rating: ratingProp,
 }) => {
   const classes = useStyles();
+  const rating = ratingProp === -1 ? null : ratingProp;
 
   return (
     <Modal open={open} onClose={handleClose} className={classes.popupDialog}>
@@ -35,8 +36,8 @@ export const RateJobModal = ({
         <Rating
           name="simple-controlled"
           style={{ marginBottom: "30px" }}
-          value={rating === -1 ? null : rating}
-          onChange={(event, newValue) => handleRatingChange(newValue)}
+          value={rating}
+          onChange={handleRatingChange}
         />
         <Button
           variant="contained"
@@ -50,3 +51,5 @@ export const RateJobModal = ({
     </Modal>
   );
 };
+
+export default RateJobModal;

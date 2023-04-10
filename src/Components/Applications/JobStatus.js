@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     textTransform: "uppercase",
+    color: "#ffffff",
   },
 }));
 
@@ -19,7 +20,7 @@ export const JobStatus = ({ status }) => {
     <Grid item xs>
       <Paper
         className={classes.statusBlock}
-        style={{ background: colorSet[status], color: "#ffffff" }}
+        style={{ background: colorSet[status] }}
       >
         {status}
       </Paper>

@@ -33,35 +33,37 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ApplicationTitle = () => {
+export const ApplicationTitle = ({ application }) => {
   const classes = useStyles();
-  // const { application } = props;
   const { setPopup } = usePopupContext();
-  // eslint-disable-next-line
   const [open, setOpen] = useState(false);
-  // eslint-disable-next-line
   const [rating, setRating] = useState(application.job.rating);
 
-  const fetchRating = () => {
-    axios
-      .get(`${apiList.rating}?id=${application.job._id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((response) => {
-        setRating(response.data.rating);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        // console.log(err.response);
-        console.log(err.response.data);
-        setPopup({
-          open: true,
-          severity: "error",
-          message: "Error",
-        });
+  const fetchRating = async () => {
+    try {
+      const response = await axios.get(
+        `${apiList.rating}?id=${application.job._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setRating(response.data.rating);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err.response.data);
+      setPopup({
+        open: true,
+        severity: "error",
+        message: "Error",
       });
+    }
+  };
+
+  const handleRateJobClick = () => {
+    fetchRating();
+    setOpen(true);
   };
 
   return (
@@ -70,25 +72,21 @@ export const ApplicationTitle = () => {
         <JobDetails />
         <Grid item container direction="column" xs={3}>
           <JobStatus />
-          {application.status === "accepted" ||
-          application.status === "finished" ? (
+          {["accepted", "finished"].includes(application.status) && (
             <Grid item>
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.statusBlock}
-                onClick={() => {
-                  fetchRating();
-                  setOpen(true);
-                }}
+                onClick={handleRateJobClick}
               >
                 Rate Job
               </Button>
             </Grid>
-          ) : null}
+          )}
         </Grid>
       </Grid>
-      <RateJobModal />
+      <RateJobModal open={open} rating={rating} />
     </Paper>
   );
 };
