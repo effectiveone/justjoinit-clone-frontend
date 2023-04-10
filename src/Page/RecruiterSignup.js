@@ -11,8 +11,8 @@ import { Redirect } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
 
-import PasswordInput from "../Utils/PasswordInput";
-import EmailInput from "../Utils/EmailInput";
+import PasswordInput from "../Components/Login/PasswordInput";
+import EmailInput from "../Components/Login/EmailInput";
 
 import Layout from "../Components/Layout/Layout";
 import { useSignup } from "../Hooks/useSignup";

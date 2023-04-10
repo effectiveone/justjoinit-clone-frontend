@@ -12,8 +12,8 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import FaceIcon from "@material-ui/icons/Face";
 import "react-phone-input-2/lib/material.css";
 
-import PasswordInput from "../Utils/PasswordInput";
-import EmailInput from "../Utils/EmailInput";
+import PasswordInput from "../Components/Login/PasswordInput";
+import EmailInput from "../Components/Login/EmailInput";
 import FileUploadInput from "../Utils/FileUploadInput";
 import { MultifieldInput } from "../Components/Common/MultifieldInput";
 import apiList from "../Utils/apiList";

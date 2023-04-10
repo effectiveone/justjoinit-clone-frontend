@@ -1,15 +1,13 @@
-import { useState } from "react";
 import { Grid, Button, Typography, makeStyles, Paper } from "@material-ui/core";
-import axios from "axios";
+
 import { Redirect } from "react-router-dom";
 
-import PasswordInput from "../Utils/PasswordInput";
-import EmailInput from "../Utils/EmailInput";
+import PasswordInput from "../Components/Login/PasswordInput";
+import EmailInput from "../Components/Login/EmailInput";
 import { usePopupContext } from "../Context/usePopupContext";
 
-import apiList from "../Utils/apiList";
-import isAuth from "../Utils/isAuth";
 import Layout from "../Components/Layout/Layout";
+import { useLogin } from "../Hooks/useLogin";
 
 const useStyles = makeStyles(() => ({
   body: {
@@ -26,76 +24,14 @@ const useStyles = makeStyles(() => ({
 const LoginPage = () => {
   const classes = useStyles();
   const { setPopup } = usePopupContext();
-
-  const [loggedin, setLoggedin] = useState(isAuth());
-
-  const [loginDetails, setLoginDetails] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [inputErrorHandler, setInputErrorHandler] = useState({
-    email: {
-      error: false,
-      message: "",
-    },
-    password: {
-      error: false,
-      message: "",
-    },
-  });
-
-  const handleInput = (key, value) => {
-    setLoginDetails({
-      ...loginDetails,
-      [key]: value,
-    });
-  };
-
-  const handleInputError = (key, status, message) => {
-    setInputErrorHandler({
-      ...inputErrorHandler,
-      [key]: {
-        error: status,
-        message: message,
-      },
-    });
-  };
-
-  const handleLogin = () => {
-    const verified = !Object.keys(inputErrorHandler).some((obj) => {
-      return inputErrorHandler[obj].error;
-    });
-    if (verified) {
-      axios
-        .post(apiList.login, loginDetails)
-        .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("type", response.data.type);
-          setLoggedin(isAuth());
-          setPopup({
-            open: true,
-            severity: "success",
-            message: "Logged in successfully",
-          });
-          console.log(response);
-        })
-        .catch((err) => {
-          setPopup({
-            open: true,
-            severity: "error",
-            message: err.response.data.message,
-          });
-          console.log(err.response);
-        });
-    } else {
-      setPopup({
-        open: true,
-        severity: "error",
-        message: "Incorrect Input",
-      });
-    }
-  };
+  const {
+    loggedin,
+    loginDetails,
+    inputErrorHandler,
+    handleInput,
+    handleInputError,
+    handleLogin,
+  } = useLogin(setPopup);
 
   return loggedin ? (
     <Redirect to="/" />
