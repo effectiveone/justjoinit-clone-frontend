@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Button,
   Chip,
@@ -10,12 +9,10 @@ import {
   Avatar,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
-import axios from "axios";
-
 import { usePopupContext } from "../../Context/usePopupContext";
 
-import apiList, { server } from "../../Utils/apiList";
-import { colorSet } from "../../Utils/jobConfig";
+import ApplicationStatusButtonSet from "./ApplicationStatusButtonSet";
+import { useJobApp } from "../../Hooks/useJobApp";
 
 const useStyles = makeStyles(() => ({
   body: {
@@ -50,196 +47,11 @@ export const ApplicationTile = () => {
   const classes = useStyles();
   const { application, getData } = props;
   const { setPopup } = usePopupContext();
-  const [open, setOpen] = useState(false);
-
-  const appliedOn = new Date(application.dateOfApplication);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const getResume = () => {
-    if (
-      application.jobApplicant.resume &&
-      application.jobApplicant.resume !== ""
-    ) {
-      const address = `${server}${application.jobApplicant.resume}`;
-      console.log(address);
-      axios(address, {
-        method: "GET",
-        responseType: "blob",
-      })
-        .then((response) => {
-          const file = new Blob([response.data], { type: "application/pdf" });
-          const fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
-        })
-        .catch((error) => {
-          console.log(error);
-          setPopup({
-            open: true,
-            severity: "error",
-            message: "Error",
-          });
-        });
-    } else {
-      setPopup({
-        open: true,
-        severity: "error",
-        message: "No resume found",
-      });
-    }
-  };
-
-  const updateStatus = (status) => {
-    const address = `${apiList.applications}/${application._id}`;
-    const statusData = {
-      status: status,
-      dateOfJoining: new Date().toISOString(),
-    };
-    axios
-      .put(address, statusData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((response) => {
-        setPopup({
-          open: true,
-          severity: "success",
-          message: response.data.message,
-        });
-        getData();
-      })
-      .catch((err) => {
-        setPopup({
-          open: true,
-          severity: "error",
-          message: err.response.data.message,
-        });
-        console.log(err.response);
-      });
-  };
-
-  const buttonSet = {
-    applied: (
-      <>
-        <Grid item xs>
-          <Button
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["shortlisted"],
-              color: "#ffffff",
-            }}
-            onClick={() => updateStatus("shortlisted")}
-          >
-            Shortlist
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["rejected"],
-              color: "#ffffff",
-            }}
-            onClick={() => updateStatus("rejected")}
-          >
-            Reject
-          </Button>
-        </Grid>
-      </>
-    ),
-    shortlisted: (
-      <>
-        <Grid item xs>
-          <Button
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["accepted"],
-              color: "#ffffff",
-            }}
-            onClick={() => updateStatus("accepted")}
-          >
-            Accept
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["rejected"],
-              color: "#ffffff",
-            }}
-            onClick={() => updateStatus("rejected")}
-          >
-            Reject
-          </Button>
-        </Grid>
-      </>
-    ),
-    rejected: (
-      <>
-        <Grid item xs>
-          <Paper
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["rejected"],
-              color: "#ffffff",
-            }}
-          >
-            Rejected
-          </Paper>
-        </Grid>
-      </>
-    ),
-    accepted: (
-      <>
-        <Grid item xs>
-          <Paper
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["accepted"],
-              color: "#ffffff",
-            }}
-          >
-            Accepted
-          </Paper>
-        </Grid>
-      </>
-    ),
-    cancelled: (
-      <>
-        <Grid item xs>
-          <Paper
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["cancelled"],
-              color: "#ffffff",
-            }}
-          >
-            Cancelled
-          </Paper>
-        </Grid>
-      </>
-    ),
-    finished: (
-      <>
-        <Grid item xs>
-          <Paper
-            className={classes.statusBlock}
-            style={{
-              background: colorSet["finished"],
-              color: "#ffffff",
-            }}
-          >
-            Finished
-          </Paper>
-        </Grid>
-      </>
-    ),
-  };
-
+  const { open, handleClose, appliedOn, getResume, updateStatus } = useJobApp({
+    application,
+    getData,
+    setPopup,
+  });
   return (
     <Paper className={classes.jobTileOuter} elevation={3}>
       <Grid container>
@@ -305,7 +117,10 @@ export const ApplicationTile = () => {
             </Button>
           </Grid>
           <Grid item container xs>
-            {buttonSet[application.status]}
+            <ApplicationStatusButtonSet
+              status={application.status}
+              updateStatus={updateStatus}
+            />
           </Grid>
         </Grid>
       </Grid>
