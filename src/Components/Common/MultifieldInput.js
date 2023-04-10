@@ -1,5 +1,5 @@
 import { Grid, TextField, Button, makeStyles } from "@material-ui/core";
-
+import { useCallback } from "react";
 import "react-phone-input-2/lib/material.css";
 
 const useStyles = makeStyles(() => ({
@@ -17,13 +17,19 @@ const useStyles = makeStyles(() => ({
 export const MultifieldInput = ({ education, setEducation }) => {
   const classes = useStyles();
 
-  const handleEducationChange = (event, key, field) => {
-    const newEducation = [...education];
-    newEducation[key][field] = event.target.value;
-    setEducation(newEducation);
-  };
+  const handleEducationChange = useCallback(
+    (event, key, field) => {
+      const newEducation = [...education];
+      newEducation[key] = {
+        ...newEducation[key],
+        [field]: event.target.value,
+      };
+      setEducation(newEducation);
+    },
+    [education, setEducation]
+  );
 
-  const handleAddEducation = () => {
+  const handleAddEducation = useCallback(() => {
     setEducation([
       ...education,
       {
@@ -32,7 +38,7 @@ export const MultifieldInput = ({ education, setEducation }) => {
         endYear: "",
       },
     ]);
-  };
+  }, [education, setEducation]);
 
   return (
     <>
@@ -83,7 +89,7 @@ export const MultifieldInput = ({ education, setEducation }) => {
           onClick={handleAddEducation}
           className={classes.inputBox}
         >
-          Add another institution details
+          Add Another Institution
         </Button>
       </Grid>
     </>
