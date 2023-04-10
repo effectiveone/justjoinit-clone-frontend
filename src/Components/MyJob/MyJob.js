@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Grid,
   IconButton,
@@ -5,10 +6,8 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-
 import SearchIcon from "@material-ui/icons/Search";
 import FilterListIcon from "@material-ui/icons/FilterList";
-
 import { useMyJobContext } from "../../Context/useMyJobContext";
 import { JobTile } from "./JobTitle";
 import { FilterPopup } from "./FilterPopup";
@@ -22,6 +21,17 @@ const MyJobs = () => {
     setSearchOptions,
     getData,
   } = useMyJobContext();
+
+  const handleSearchInputChange = (event) => {
+    setSearchOptions({ ...searchOptions, query: event.target.value });
+  };
+
+  const handleSearchInputKeyPress = (event) => {
+    if (event.key === "Enter") {
+      getData();
+    }
+  };
+
   return (
     <>
       <Grid
@@ -45,21 +55,12 @@ const MyJobs = () => {
             <TextField
               label="Search Jobs"
               value={searchOptions.query}
-              onChange={(event) =>
-                setSearchOptions({
-                  ...searchOptions,
-                  query: event.target.value,
-                })
-              }
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  getData();
-                }
-              }}
+              onChange={handleSearchInputChange}
+              onKeyPress={handleSearchInputKeyPress}
               InputProps={{
                 endAdornment: (
                   <InputAdornment>
-                    <IconButton onClick={() => getData()}>
+                    <IconButton onClick={getData}>
                       <SearchIcon />
                     </IconButton>
                   </InputAdornment>
@@ -75,7 +76,6 @@ const MyJobs = () => {
             </IconButton>
           </Grid>
         </Grid>
-
         <Grid
           container
           item
@@ -85,9 +85,9 @@ const MyJobs = () => {
           justifyContent="center"
         >
           {jobs.length > 0 ? (
-            jobs.map((job) => {
-              return <JobTile job={job} getData={getData} />;
-            })
+            jobs.map((job) => (
+              <JobTile key={job._id} job={job} getData={getData} />
+            ))
           ) : (
             <Typography variant="h5" style={{ textAlign: "center" }}>
               No jobs found
