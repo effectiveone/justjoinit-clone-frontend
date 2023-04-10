@@ -20,50 +20,79 @@ const Navbar = () => {
   const getButtonsComponent = () => {
     if (isAuth()) {
       if (userType() === "recruiter") {
-        return <RecruterButtons handleClick={handleClick} />;
+        return (
+          <RecruterButtons
+            handleClick={handleClick}
+            data-testid="recruiter-buttons"
+          />
+        );
       } else {
-        return <ApplicantButtons handleClick={handleClick} />;
+        return (
+          <ApplicantButtons
+            handleClick={handleClick}
+            data-testid="applicant-buttons"
+          />
+        );
       }
     } else {
-      return <NoLoginButtons handleClick={handleClick} />;
+      return (
+        <NoLoginButtons
+          handleClick={handleClick}
+          data-testid="nologin-buttons"
+        />
+      );
     }
   };
 
   return (
-    <AppBar
-      position="fixed"
-      style={{ backgroundColor: "#fff", color: "black" }}
-    >
-      <Toolbar
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          // alignItems: "center",
-        }}
+    <nav data-testid="mock-navbar">
+      <AppBar
+        position="fixed"
+        style={{ backgroundColor: "#fff", color: "black" }}
+        data-testid="appbar"
       >
-        <Box
+        <Toolbar
           style={{
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center",
+            justifyContent: "space-between",
+            // alignItems: "center",
           }}
+          data-testid="toolbar"
         >
-          <img src={navbarLogo} alt="Just Join" width="126px" height="40px" />
-          <Typography>#1 Job Board for tech industry in Europe</Typography>
-        </Box>
-        <Box
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
-          {getButtonsComponent()}
-        </Box>
-      </Toolbar>
-    </AppBar>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+            }}
+            data-testid="navbar-left"
+          >
+            <img
+              src={navbarLogo}
+              alt="Just Join"
+              width="126px"
+              height="40px"
+              data-testid="navbar-logo"
+            />
+            <Typography data-testid="navbar-description">
+              #1 Job Board for tech industry in Europe
+            </Typography>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+            data-testid="navbar-right"
+          >
+            {getButtonsComponent()}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </nav>
   );
 };
 

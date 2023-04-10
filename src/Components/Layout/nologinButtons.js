@@ -25,24 +25,26 @@ const NoLoginButtons = ({ handleClick }) => {
   const classes = useStyles();
   return (
     <>
-      <Typography variant="h6">
-        <Link to="/" className={classes.link}>
-          Offers
-        </Link>
-        <Link to="/" className={classes.link}>
-          Brand Stories
-        </Link>
-        <Link to="/" className={classes.link}>
-          Geek
-        </Link>
-        <Link to="/" className={classes.link}>
-          Matchmaking
-        </Link>
-      </Typography>
-      <Button color="inherit" onClick={() => handleClick("/login")}>
-        Login
-      </Button>
-      <RegisterButton handleClick={handleClick} />
+      <div data-testid="mock-nologin-buttons">
+        <Typography variant="h6">
+          <Link to="/" className={classes.link}>
+            Offers
+          </Link>
+          <Link to="/" className={classes.link}>
+            Brand Stories
+          </Link>
+          <Link to="/" className={classes.link}>
+            Geek
+          </Link>
+          <Link to="/" className={classes.link}>
+            Matchmaking
+          </Link>
+        </Typography>
+        <Button color="inherit" onClick={() => handleClick("/login")}>
+          Login
+        </Button>
+        <RegisterButton handleClick={handleClick} />
+      </div>
     </>
   );
 };
