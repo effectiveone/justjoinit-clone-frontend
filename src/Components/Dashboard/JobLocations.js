@@ -7,12 +7,16 @@ const useStyles = makeStyles(() => ({
   pin: {
     marginRight: "5px",
     color: "#9fa7b0",
+    width: "16px",
+    height: "16px",
   },
   location: {
     display: "flex",
     alignItems: "center",
     position: "relative",
     cursor: "pointer",
+    fontSize: "10px",
+    color: "rgb(153, 161, 171)",
     "&:hover": {
       textDecoration: "underline",
     },
@@ -21,14 +25,14 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     display: "flex",
     zIndex: 2,
-    left: "10px",
+    left: "43px",
     alignItems: "center",
     flexDirection: "column",
     width: "820px",
     backgroundColor: "white",
-    // top: "0px",
   },
   expandIcon: {
+    size: "10px",
     marginLeft: "5px",
     color: "#777",
     transition: "transform 0.2s ease",
@@ -47,6 +51,13 @@ const useStyles = makeStyles(() => ({
   rotate: {
     transform: "rotate(180deg)",
   },
+  company: {
+    display: "flex",
+    alignItems: "center",
+  },
+  spacer: {
+    width: "24px",
+  },
 }));
 
 function JobLocations({ locations }) {
@@ -64,14 +75,20 @@ function JobLocations({ locations }) {
       {locationCount === 1 ? (
         <Box className={classes.location}>
           <Room className={classes.pin} />
-          <Typography variant="subtitle1">{locations[0]}</Typography>
+          <Typography variant="subtitle1" style={{ fontSize: "10px" }}>
+            {locations[0]}
+          </Typography>
         </Box>
       ) : (
         <Box className={classes.location}>
           <Room className={classes.pin} />
-          <Typography variant="subtitle1">{locations[0]}</Typography>
+          <Typography variant="subtitle1" style={{ fontSize: "10px" }}>
+            {locations[0]}
+          </Typography>
           <>
-            <Typography variant="subtitle1">+{locationCount - 1}</Typography>
+            <Typography variant="subtitle1" style={{ fontSize: "10px" }}>
+              +{locationCount - 1}
+            </Typography>
             <IconButton
               className={`${classes.expandIcon} ${
                 isExpanded && classes.rotate

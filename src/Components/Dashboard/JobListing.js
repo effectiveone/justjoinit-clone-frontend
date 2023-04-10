@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Chip } from "@material-ui/core";
+import { Box, Typography, Chip, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { BuildingIcon } from "../../Utils/devIcons";
 import JobLocations from "./JobLocations";
@@ -48,6 +48,8 @@ const useStyles = makeStyles(() => ({
     alignItems: "flex-start",
   },
   right: {
+    paddingRight: "20px",
+    gap: "5px",
     gridColumn: "3/4",
     display: "flex",
     justifyContent: "center",
@@ -55,6 +57,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "flex-end",
   },
   right_box: {
+    alignItems: "center",
     display: "flex",
     flexDirection: "row",
   },
@@ -63,6 +66,23 @@ const useStyles = makeStyles(() => ({
     textTransform: "uppercase",
     fontWeight: "bold",
     lineHeight: 1,
+    color: "rgb(153, 161, 171)",
+    height: "22px",
+    display: "inline-block",
+    padding: "0 7px",
+    overflow: "hidden",
+    fontSize: "11px",
+    minWidth: "1ch",
+    lineHeight: "20px",
+    marginLeft: "6px",
+    /* whiteSpace: "nowrap", */
+    borderColor: "rgb(224, 224, 224)",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderRadius: "11px",
+    textOverflow: "ellipsis",
+    textTransform: "lowercase",
+    backgroundColor: "rgb(255, 255, 255)",
   },
   title: {
     fontWeight: "bold",
@@ -72,12 +92,6 @@ const useStyles = makeStyles(() => ({
     center__box: {
       display: "flex",
       flexDirection: "column",
-    },
-    building: {
-      display: "flex",
-      alignItems: "center",
-      gap: "2px",
-      lineHeight: 1,
     },
   },
 }));
@@ -103,10 +117,18 @@ function JobListing(props) {
             </Typography>
           </Box>
           <Box className={classes.right_box}>
-            <Box className={classes.building}>
-              <BuildingIcon color="#9fa7b0" />
-              <span>NazwaFirmy</span>
-            </Box>
+            <Grid
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <BuildingIcon color="#9fa7b0" width="16px" height="16px" />
+              <span style={{ fontSize: "10px", color: "rgb(153, 161, 171)" }}>
+                NazwaFirmy
+              </span>
+            </Grid>
             <JobLocations locations={props.job?.locations} />
             {props.job?.remote && (
               <Chip
