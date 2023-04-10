@@ -3,16 +3,6 @@ import { Grid, TextField, makeStyles } from "@material-ui/core";
 import { useProfileContext } from "../../Context/useProfileContext";
 
 const useStyles = makeStyles(() => ({
-  body: {
-    height: "inherit",
-  },
-  popupDialog: {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    // padding: "30px",
-  },
   inputBox: {
     width: "300px",
   },
@@ -22,6 +12,24 @@ export const JobInput = () => {
   const classes = useStyles();
   const { jobs, setJobs } = useProfileContext();
 
+  const handleJobTitleChange = (event, key) => {
+    const newJobs = [...jobs];
+    newJobs[key].jobTitle = event.target.value;
+    setJobs(newJobs);
+  };
+
+  const handleSalaryChange = (event, key) => {
+    const newJobs = [...jobs];
+    newJobs[key].salary = event.target.value;
+    setJobs(newJobs);
+  };
+
+  const handleDurationChange = (event, key) => {
+    const newJobs = [...jobs];
+    newJobs[key].duration = event.target.value;
+    setJobs(newJobs);
+  };
+
   return (
     <>
       {jobs.map((obj, key) => (
@@ -30,11 +38,7 @@ export const JobInput = () => {
             <TextField
               label={`Job Title #${key + 1}`}
               value={jobs[key].jobTitle}
-              onChange={(event) => {
-                const newJobs = [...jobs];
-                newJobs[key].jobTitle = event.target.value;
-                setJobs(newJobs);
-              }}
+              onChange={(event) => handleJobTitleChange(event, key)}
               variant="outlined"
               fullWidth
             />
@@ -45,11 +49,7 @@ export const JobInput = () => {
               value={obj.salary}
               variant="outlined"
               type="number"
-              onChange={(event) => {
-                const newJobs = [...jobs];
-                newJobs[key].salary = event.target.value;
-                setJobs(newJobs);
-              }}
+              onChange={(event) => handleSalaryChange(event, key)}
             />
           </Grid>
           <Grid item xs={3}>
@@ -58,11 +58,7 @@ export const JobInput = () => {
               value={obj.duration}
               variant="outlined"
               type="number"
-              onChange={(event) => {
-                const newJobs = [...jobs];
-                newJobs[key].duration = event.target.value;
-                setJobs(newJobs);
-              }}
+              onChange={(event) => handleDurationChange(event, key)}
             />
           </Grid>
         </Grid>
