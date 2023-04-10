@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Grid, makeStyles, Paper } from "@material-ui/core";
-import { RateJobModal } from "./RateJobModal";
+import RateJobModal from "./RateJobModal";
 import { JobDetails } from "./JobDetails";
 import { JobStatus } from "./JobStatus";
 import axios from "axios";
