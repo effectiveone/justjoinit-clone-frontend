@@ -6,10 +6,10 @@ const DashboardContext = createContext();
 export const useDashboardContext = () => useContext(DashboardContext);
 
 export const DashboardProvider = ({ children }) => {
-  const Dashboard = useDashboard();
+  const dashboard = useDashboard();
 
   return (
-    <DashboardContext.Provider value={Dashboard}>
+    <DashboardContext.Provider value={dashboard}>
       {children}
     </DashboardContext.Provider>
   );

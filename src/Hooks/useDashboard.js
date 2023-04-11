@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import apiList from "../Utils/apiList";
 import { usePopupContext } from "../Context/usePopupContext";
+import { useParams } from "react-router-dom";
 
 export const useDashboard = () => {
+  const { id } = useParams();
   const [jobs, setJobs] = useState([]);
-  useEffect(() => {
-    console.log("ssjobsjobs", jobs);
-  }, [setJobs]);
+  const [selectedJob, setSelectedJob] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchOptions, setSearchOptions] = useState({
     query: "",
@@ -35,19 +35,39 @@ export const useDashboard = () => {
   });
   const { setPopup } = usePopupContext();
 
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`${apiList.jobs}/${id}`)
+        .then((response) => {
+          setSelectedJob(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          setPopup({
+            open: true,
+            severity: "error",
+            message: "Error",
+          });
+        });
+    } else {
+      setSelectedJob(null);
+    }
+  }, [id]);
+
   const getData = useCallback(() => {
     let searchParams = [];
     if (searchOptions.query !== "") {
       searchParams = [...searchParams, `q=${searchOptions.query}`];
     }
     if (searchOptions.jobType.fullTime) {
-      searchParams = [...searchParams, `jobType=Full%20Time`];
+      searchParams = [...searchParams, "jobType=Full%20Time"];
     }
     if (searchOptions.jobType.partTime) {
-      searchParams = [...searchParams, `jobType=Part%20Time`];
+      searchParams = [...searchParams, "jobType=Part%20Time"];
     }
     if (searchOptions.jobType.wfh) {
-      searchParams = [...searchParams, `jobType=Work%20From%20Home`];
+      searchParams = [...searchParams, "jobType=Work%20From%20Home"];
     }
     if (searchOptions.salary[0] !== 0) {
       searchParams = [
@@ -85,7 +105,6 @@ export const useDashboard = () => {
     // if (queryString !== "") {
     //   address = `${address}?${queryString}`;
     // }
-    console.group("address", address);
     axios
       .get(address, {
         headers: {
@@ -116,5 +135,6 @@ export const useDashboard = () => {
     setFilterOpen,
     setSearchOptions,
     getData,
+    selectedJob,
   };
 };

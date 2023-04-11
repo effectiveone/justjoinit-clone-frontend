@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { devIcons } from "../../Utils/devIcons";
+import { devIcons } from "../../../Utils/devIcons";
 
 const CustomLanguageSelect = ({ handleLanguageClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);

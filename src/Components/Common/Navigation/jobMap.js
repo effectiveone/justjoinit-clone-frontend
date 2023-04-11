@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { getCityCoords } from "../../Utils/getCityCoords";
-import { useDashboardContext } from "../../Context/useDashboardContext";
+import { getCityCoords } from "../../../Utils/getCityCoords";
+import { useDashboardContext } from "../../../Context/useDashboardContext";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
-import { devIcons } from "../../Utils/devIcons";
+import { devIcons } from "../../../Utils/devIcons";
 import "devicon/devicon.min.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
   mapContainer: {
     height: "500px",
     width: "500px",
-    position: "relative",
   },
 }));
 
@@ -42,7 +41,7 @@ const JobMap = () => {
       layers: [
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
         }),
       ],
     });

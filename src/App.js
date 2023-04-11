@@ -17,7 +17,7 @@ import RecruiterProfilePage from "./Page/recruiter/ProfilePage";
 import MessagePopup from "./Utils/MessagePopup";
 import { userType } from "./Utils/isAuth";
 import { PopupProvider } from "./Context/usePopupContext";
-
+import OfferPage from "./Page/OfferPage";
 const useStyles = makeStyles(() => ({
   body: {
     display: "flex",
@@ -45,6 +45,8 @@ function App() {
               <Route exact path="/">
                 <HomePage />
               </Route>
+              <Route path="/offers/:id" component={OfferPage} />
+
               <Route exact path="/login">
                 <LoginPage />
               </Route>
