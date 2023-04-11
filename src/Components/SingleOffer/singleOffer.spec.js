@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import SingleOffer from "./SingleOffer";
+import SingleOffer from "./singleOffer";
 import { DashboardContextProvider } from "../../Context/useDashboardContext";
 
 describe("SingleOffer Component", () => {
