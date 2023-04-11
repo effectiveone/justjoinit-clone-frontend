@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# JustJoin.it Clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a clone of the JustJoin.it website, implementing advanced React techniques such as Higher-Order Components (HOC), Context, and the smart-dumb architecture. The application utilizes various design patterns like render props, factory, HOC, and strategy to create a maintainable, scalable, and well-structured codebase.
 
-## Available Scripts
+## Design Patterns
+- **Render Props**: This pattern allows components to share common functionality by passing a render function as a prop. It promotes reusability and makes it easier to manage complex logic.
+- **Factory**: The factory pattern creates objects without exposing the instantiation logic to the client, providing an interface to create instances of a class. This pattern helps to maintain a separation of concerns and makes it easy to add or modify object types.
+- **Higher-Order Component (HOC)**: HOC is a function that takes a component and returns a new component with additional props and/or behavior. This pattern enables the reuse of component logic and makes it easier to refactor and test components.
+- **Strategy**: The strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. This allows the algorithm to vary independently from the clients that use it, promoting flexibility and extensibility.
 
-In the project directory, you can run:
+## Clean Code Principles
+This project follows clean code principles, aiming for a well-structured, easy-to-read, and maintainable codebase. The application avoids code duplication and creates a file structure that reads like a book. Tools like ESLint and Prettier are utilized to ensure consistent and readable code formatting, making it easy for other developers to understand and work with the codebase.
 
-### `npm start`
+## Libraries Used
+Some of the key libraries used in this project include:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- `@material-ui/core`: A popular React UI framework that provides a set of components and styles for building modern, responsive, and accessible web applications.
+- `@material-ui/icons`: A library that provides a set of Material Design icons for use in React applications.
+- `@testing-library/react`: A lightweight solution for testing React components that encourages good testing practices by working with actual DOM nodes and user interactions.
+- `axios`: A popular and feature-rich HTTP client for making API requests in JavaScript applications.
+- `leaflet`: An open-source JavaScript library for creating interactive maps.
+- `react-router-dom`: A declarative routing library for React applications that provides a collection of navigational components and utilities for managing routing in single-page applications.
+- `webpack`: A highly configurable module bundler for JavaScript applications that helps to optimize and automate the process of building, bundling, and deploying web applications.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+For a full list of libraries and their versions used in this project, please refer to the `package.json` file.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Getting Started
 
-### `npm run build`
+Follow these steps to set up and run the JustJoin.it clone on your local machine:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+https://github.com/effectiveone/justjoinit-clone-frontend.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+2. Change into the project directory:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+cd justjoinit-clone-frontend
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. Install the required dependencies:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+yarn
+```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Start the development server:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+yarn start
+```
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The application should now be running on `http://localhost:3000`.
 
-### Analyzing the Bundle Size
+## Backend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+To set up the backend for the JustJoin.it clone, follow these steps:
 
-### Making a Progressive Web App
+1. Download the `justjoint-backend` repository or folder.
+2. Follow the instructions provided in the `README` file within the `justjoint-backend` folder.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+After setting up the backend, the JustJoin.it clone should be able to communicate with the database and perform required operations.
