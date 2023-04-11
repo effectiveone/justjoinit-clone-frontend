@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function CustomSelectButton() {
+function CustomSelectButton({ handleLocationClick }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   // const [selectedOption, setSelectedOption] = useState(options[0]);
@@ -65,7 +65,11 @@ function CustomSelectButton() {
       >
         Location
       </Button>
-      <LocationModal open={open} handleClose={() => setOpen((prev) => !prev)} />
+      <LocationModal
+        handleLocationClick={handleLocationClick}
+        open={open}
+        handleClose={() => setOpen((prev) => !prev)}
+      />
     </div>
   );
 }

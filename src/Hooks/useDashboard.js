@@ -32,6 +32,7 @@ export const useDashboard = () => {
         desc: false,
       },
     },
+    location: "",
   });
   const { setPopup } = usePopupContext();
 
@@ -57,9 +58,13 @@ export const useDashboard = () => {
 
   const getData = useCallback(() => {
     let searchParams = [];
+    console.log("searchParams", searchParams);
+    // Check if searchOptions.query is not an empty string and add it to searchParams
     if (searchOptions.query !== "") {
       searchParams = [...searchParams, `q=${searchOptions.query}`];
     }
+
+    // Check jobType filters and add them to searchParams
     if (searchOptions.jobType.fullTime) {
       searchParams = [...searchParams, "jobType=Full%20Time"];
     }
@@ -69,6 +74,8 @@ export const useDashboard = () => {
     if (searchOptions.jobType.wfh) {
       searchParams = [...searchParams, "jobType=Work%20From%20Home"];
     }
+
+    // Check if salary filters are set and add them to searchParams
     if (searchOptions.salary[0] !== 0) {
       searchParams = [
         ...searchParams,
@@ -81,15 +88,29 @@ export const useDashboard = () => {
         `salaryMax=${searchOptions.salary[1] * 1000}`,
       ];
     }
+
+    // Check if duration filter is set and add it to searchParams
     if (searchOptions.duration !== "0") {
       searchParams = [...searchParams, `duration=${searchOptions.duration}`];
     }
 
-    let asc = [],
-      desc = [];
+    if (searchOptions.location !== "") {
+      searchParams = [...searchParams, `location=${searchOptions.location}`];
+    }
 
+    // Check if techStack filter is set and add it to searchParams
+    if (searchOptions.techStack?.length > 0) {
+      searchParams = [...searchParams, `techStack=${searchOptions.techStack}`];
+    }
+
+    let asc = [];
+    let desc = [];
+
+    // Loop through each property in the searchOptions.sort object
     Object.keys(searchOptions.sort).forEach((obj) => {
       const item = searchOptions.sort[obj];
+
+      // If item.status is true, add "asc={obj}" or "desc={obj}" to the appropriate array
       if (item.status) {
         if (item.desc) {
           desc = [...desc, `desc=${obj}`];
@@ -98,13 +119,22 @@ export const useDashboard = () => {
         }
       }
     });
+
+    // Add all elements in the asc and desc arrays to the searchParams array
     searchParams = [...searchParams, ...asc, ...desc];
+
+    // Join all elements in the searchParams array with "&" and store in queryString
     const queryString = searchParams.join("&");
-    console.log(queryString);
+
+    // Set the initial address to apiList.alljobs
     let address = apiList.alljobs;
-    // if (queryString !== "") {
-    //   address = `${address}?${queryString}`;
-    // }
+
+    // If queryString is not an empty string, add it to the address
+    if (queryString !== "") {
+      address = `${address}?${queryString}`;
+    }
+
+    // Make a GET request to the address with an Authorization header
     axios
       .get(address, {
         headers: {

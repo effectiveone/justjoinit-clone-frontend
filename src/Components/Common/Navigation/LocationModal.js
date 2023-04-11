@@ -46,15 +46,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LocationModal({ open, handleClose, handleLanguageClick }) {
+function LocationModal({ open, handleClose, handleLocationClick }) {
   const classes = useStyles();
   const locations = [
     "Warszawa",
-    "Krakow",
-    "Wroclaw",
+    "Kraków",
+    "Wrocław",
     "Poznan",
     "Trojmiasto",
-    "Slask",
+    "Śląsk",
   ];
   const worldLocations = [
     "New York",
@@ -86,7 +86,7 @@ function LocationModal({ open, handleClose, handleLanguageClick }) {
             <Button
               key={location}
               variant="outlined"
-              onClick={() => handleLanguageClick(location)}
+              onClick={() => handleLocationClick(location)}
               className={classes.locationButton}
             >
               {location}
@@ -97,7 +97,7 @@ function LocationModal({ open, handleClose, handleLanguageClick }) {
             <Button
               key={location}
               variant="outlined"
-              onClick={() => handleLanguageClick(location)}
+              onClick={() => handleLocationClick(location)}
               className={classes.locationButton}
             >
               {location}

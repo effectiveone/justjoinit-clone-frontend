@@ -31,7 +31,17 @@ export const devIcons = [
     name: "Mobile",
     background: "#db4e87",
   },
-];
+].map((icon) => {
+  let name = icon.name;
+  if (name === "JS") {
+    name = "JavaScript";
+  } else if (name === ".Net") {
+    name = ".NET";
+  } else if (name === "C") {
+    name = "C#";
+  }
+  return { ...icon, value: name };
+});
 
 export const BuildingIcon = ({ color, width, height }) => {
   return (

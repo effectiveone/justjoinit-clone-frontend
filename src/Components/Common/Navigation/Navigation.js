@@ -25,7 +25,15 @@ const Navigation = ({ children }) => {
   const handleLanguageClick = (languageName) => {
     setSearchOptions({
       ...searchOptions,
-      query: languageName,
+      techStack: languageName,
+    });
+    getData();
+  };
+
+  const handleLocationClick = (location) => {
+    setSearchOptions({
+      ...searchOptions,
+      location: location,
     });
     getData();
   };
@@ -65,7 +73,7 @@ const Navigation = ({ children }) => {
             <>
               <Grid item>
                 <CustomSelectButton
-                  handleLanguageClick={handleLanguageClick}
+                  handleLocationClick={handleLocationClick}
                   style={{ flex: 1 }}
                   isFocused={isFocused}
                 />

@@ -45,7 +45,7 @@ function LanguageGrid({ handleLanguageClick }) {
       {devIcons.map((language, index) => (
         <Grid item key={index} xs className={classes.iconWrapper}>
           <IconButton
-            onClick={() => handleLanguageClick(language.name)}
+            onClick={() => handleLanguageClick(language.value)}
             className={classes.iconButton}
             style={{ backgroundColor: language.background }}
           >
